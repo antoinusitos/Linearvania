@@ -8,7 +8,7 @@
 
 class USceneComponent;
 class UBoxComponent;
-class UStaticMeshComponent;
+class UPaperSpriteComponent;
 
 UCLASS()
 class LINEARVANIA_API ALV_PowerUp : public AActor
@@ -34,9 +34,12 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "LV")
 	UBoxComponent* myCollisionComponent;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LV")
-	UStaticMeshComponent* myMesh = nullptr;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "LV")
+	UPaperSpriteComponent* mySpriteComponent = nullptr;
 	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LV")
+	FString myBonusName = "";
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LV")
 	float myBonusPercent = 0;
 

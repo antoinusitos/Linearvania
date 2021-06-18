@@ -28,6 +28,13 @@ ALV_Player::ALV_Player()
 
 	myShootPlace = CreateDefaultSubobject<UArrowComponent>(TEXT("ShootPlace"));
 	myShootPlace->SetupAttachment(myFlipbookComponent);
+
+	FPlayerStatUpgrade fireRate = FPlayerStatUpgrade();
+	fireRate.myName = "FireRate";
+	fireRate.myBaseValue = 0.2f;
+	fireRate.myCurrentValue = fireRate.myBaseValue;
+	fireRate.myMinValue = 0.05f;
+	myPlayerStatUpgrades.Add(fireRate);
 }
 
 // Called when the game starts or when spawned
@@ -35,8 +42,9 @@ void ALV_Player::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	myCurrentShootRate = myShootRate;
+	myShootRateIndex = GetPlayerUpgradeIndex("FireRate");
 
+	myPlayerStatUpgrades[myShootRateIndex].myCurrentValue = myPlayerStatUpgrades[myShootRateIndex].myBaseValue;
 }
 
 // Called every frame
@@ -52,7 +60,7 @@ void ALV_Player::Tick(float DeltaTime)
 	if (!myCanShoot)
 	{
 		myCurrentShootTime += DeltaTime;
-		if (myCurrentShootTime >= myCurrentShootRate)
+		if (myCurrentShootTime >= myPlayerStatUpgrades[myShootRateIndex].myCurrentValue)
 		{
 			myCurrentShootTime = 0;
 			myCanShoot = true;
@@ -155,12 +163,32 @@ void ALV_Player::SpawnBullet()
 	myCanShoot = false;
 }
 
-void ALV_Player::AddShootRateBonus(float aValue)
+void ALV_Player::AddBonus(const FString& aName, float aValue)
 {
-	myBonusShootRate += aValue;
-	myCurrentShootRate = myShootRate - myShootRate * myBonusShootRate;
-	if (myCurrentShootRate < myMinShootRate)
+	for (int i = 0; i < myPlayerStatUpgrades.Num(); i++)
 	{
-		myCurrentShootRate = myMinShootRate;
+		if (myPlayerStatUpgrades[i].myName == aName)
+		{
+			myPlayerStatUpgrades[i].myBonusValue += aValue;
+			myPlayerStatUpgrades[i].myCurrentValue = myPlayerStatUpgrades[i].myBaseValue - myPlayerStatUpgrades[i].myBaseValue * myPlayerStatUpgrades[i].myBonusValue;
+			if (myPlayerStatUpgrades[i].myCurrentValue < myPlayerStatUpgrades[i].myMinValue)
+			{
+				myPlayerStatUpgrades[i].myCurrentValue = myPlayerStatUpgrades[i].myMinValue;
+			}
+			return;
+		}
 	}
+}
+
+int ALV_Player::GetPlayerUpgradeIndex(const FString& aName)
+{
+	for (int i = 0; i < myPlayerStatUpgrades.Num(); i++)
+	{
+		if (myPlayerStatUpgrades[i].myName == aName)
+		{
+			return i;
+		}
+	}
+
+	return -1;
 }

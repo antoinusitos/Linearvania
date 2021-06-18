@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "LV_PowerUp.h"
-#include "Components/StaticMeshComponent.h"
+#include "PaperSpriteComponent.h"
 #include "Components/BoxComponent.h"
 #include "LV_Player.h"
 
@@ -14,8 +14,8 @@ ALV_PowerUp::ALV_PowerUp()
 	mySceneComponent = CreateDefaultSubobject<USceneComponent>(TEXT("USceneComponent"));
 	RootComponent = mySceneComponent;
 
-	myMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
-	myMesh->SetupAttachment(RootComponent);
+	mySpriteComponent = CreateDefaultSubobject<UPaperSpriteComponent>(TEXT("SpriteComponent"));
+	mySpriteComponent->SetupAttachment(RootComponent);
 
 	myCollisionComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("CollisionComponent"));
 	myCollisionComponent->SetupAttachment(RootComponent);
@@ -45,7 +45,7 @@ void ALV_PowerUp::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, clas
 		ALV_Player* player = Cast<ALV_Player>(OtherActor);
 		if (player != nullptr)
 		{
-			player->AddShootRateBonus(myBonusPercent);
+			player->AddBonus(myBonusName, myBonusPercent);
 			Destroy();
 		}
 	}

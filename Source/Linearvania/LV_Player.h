@@ -13,6 +13,28 @@ class UPaperFlipbook;
 class UArrowComponent;
 class ALV_Bullet;
 
+USTRUCT(BlueprintType)
+struct FPlayerStatUpgrade
+{
+	GENERATED_BODY()
+
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LV")
+	FString myName = "";
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LV")
+	float myBaseValue = 0;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LV")
+	float myCurrentValue = 0;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LV")
+	float myMinValue = 0;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LV")
+	float myBonusValue = 0;
+};
+
 UCLASS()
 class LINEARVANIA_API ALV_Player : public ACharacter
 {
@@ -46,7 +68,10 @@ public:
 
 	void SpawnBullet();
 
-	void AddShootRateBonus(float aValue);
+	void AddBonus(const FString& aName, float aValue);
+
+private:
+	int GetPlayerUpgradeIndex(const FString& aName);
 
 public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "LV")
@@ -77,18 +102,10 @@ public:
 	TSubclassOf<ALV_Bullet> myBulletBP;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "LV")
-	float myShootRate = 0.2f;
-
-	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "LV")
-	float myCurrentShootRate = 0.2f;
-
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "LV")
-	float myMinShootRate = 0.05f;
-
-	float myBonusShootRate = 0;
-
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "LV")
 	UArrowComponent* myShootPlace = nullptr;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "LV")
+	TArray<FPlayerStatUpgrade> myPlayerStatUpgrades;
 
 private:
 	bool myIsShooting = false;
@@ -96,4 +113,6 @@ private:
 	bool myCanShoot = false;
 
 	float myCurrentShootTime = 0;
+
+	int myShootRateIndex = 0;
 };
