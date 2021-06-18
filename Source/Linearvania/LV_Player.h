@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "LV_Data.h"
 #include "LV_Player.generated.h"
 
 class UCameraComponent;
@@ -12,28 +13,6 @@ class UPaperFlipbookComponent;
 class UPaperFlipbook;
 class UArrowComponent;
 class ALV_Bullet;
-
-USTRUCT(BlueprintType)
-struct FPlayerStatUpgrade
-{
-	GENERATED_BODY()
-
-public:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LV")
-	FString myName = "";
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LV")
-	float myBaseValue = 0;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LV")
-	float myCurrentValue = 0;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LV")
-	float myMinValue = 0;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LV")
-	float myBonusValue = 0;
-};
 
 UCLASS()
 class LINEARVANIA_API ALV_Player : public ACharacter
