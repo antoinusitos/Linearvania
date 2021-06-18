@@ -45,7 +45,10 @@ void ALV_PowerUp::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, clas
 		ALV_Player* player = Cast<ALV_Player>(OtherActor);
 		if (player != nullptr)
 		{
-			player->AddBonus(myBonusName, myBonusPercent);
+			for (int i = 0; i < myBonus.Num(); i++)
+			{
+				player->AddBonus(myBonus[i].myBonusName, myBonus[i].myBonusPercent);
+			}
 			Destroy();
 		}
 	}

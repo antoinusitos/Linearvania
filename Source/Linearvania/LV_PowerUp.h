@@ -10,6 +10,19 @@ class USceneComponent;
 class UBoxComponent;
 class UPaperSpriteComponent;
 
+USTRUCT(BlueprintType)
+struct FBonus
+{
+	GENERATED_BODY()
+
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LV")
+	FString myBonusName = "";
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LV")
+	float myBonusPercent = 0;
+};
+
 UCLASS()
 class LINEARVANIA_API ALV_PowerUp : public AActor
 {
@@ -38,10 +51,7 @@ public:
 	UPaperSpriteComponent* mySpriteComponent = nullptr;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LV")
-	FString myBonusName = "";
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LV")
-	float myBonusPercent = 0;
+	TArray<FBonus> myBonus;
 
 public:
 	UFUNCTION()
