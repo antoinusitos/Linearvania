@@ -8,6 +8,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Components/ArrowComponent.h"
 #include "LV_Bullet.h"
+#include "LV_DataAsset.h"
 
 // Sets default values
 ALV_Player::ALV_Player()
@@ -28,13 +29,6 @@ ALV_Player::ALV_Player()
 
 	myShootPlace = CreateDefaultSubobject<UArrowComponent>(TEXT("ShootPlace"));
 	myShootPlace->SetupAttachment(myFlipbookComponent);
-
-	FPlayerStatUpgrade fireRate = FPlayerStatUpgrade();
-	fireRate.myName = "FireRate";
-	fireRate.myBaseValue = 0.2f;
-	fireRate.myCurrentValue = fireRate.myBaseValue;
-	fireRate.myMinValue = 0.05f;
-	myPlayerStatUpgrades.Add(fireRate);
 }
 
 // Called when the game starts or when spawned
@@ -42,9 +36,8 @@ void ALV_Player::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	myShootRateIndex = GetPlayerUpgradeIndex("FireRate");
-
-	myPlayerStatUpgrades[myShootRateIndex].myCurrentValue = myPlayerStatUpgrades[myShootRateIndex].myBaseValue;
+	LoadUpgrades();
+	
 }
 
 // Called every frame
@@ -191,4 +184,20 @@ int ALV_Player::GetPlayerUpgradeIndex(const FString& aName)
 	}
 
 	return -1;
+}
+
+void ALV_Player::LoadUpgrades()
+{
+	if (myUpgradeData != nullptr)
+	{
+		for (int i = 0; i < myUpgradeData->myPlayerStatUpgrades.Num(); i++)
+		{
+			myPlayerStatUpgrades.Add(myUpgradeData->myPlayerStatUpgrades[i]);
+		}
+	}
+
+
+	myShootRateIndex = GetPlayerUpgradeIndex("FireRate");
+
+	myPlayerStatUpgrades[myShootRateIndex].myCurrentValue = myPlayerStatUpgrades[myShootRateIndex].myBaseValue;
 }

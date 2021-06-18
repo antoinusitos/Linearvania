@@ -13,6 +13,7 @@ class UPaperFlipbookComponent;
 class UPaperFlipbook;
 class UArrowComponent;
 class ALV_Bullet;
+class ULV_DataAsset;
 
 UCLASS()
 class LINEARVANIA_API ALV_Player : public ACharacter
@@ -52,6 +53,8 @@ public:
 private:
 	int GetPlayerUpgradeIndex(const FString& aName);
 
+	void LoadUpgrades();
+
 public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "LV")
 	UPaperFlipbook* myJumpFlipbook = nullptr;
@@ -85,6 +88,9 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "LV")
 	TArray<FPlayerStatUpgrade> myPlayerStatUpgrades;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "LV")
+	ULV_DataAsset* myUpgradeData = nullptr;
 
 private:
 	bool myIsShooting = false;
