@@ -27,6 +27,33 @@ public:
 		float myBonusValue = 0;
 };
 
+USTRUCT(BlueprintType)
+struct FUpgradeToApply
+{
+	GENERATED_USTRUCT_BODY()
+
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LV")
+	FString myStatToApplyName = "";
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LV")
+	float myValueToApply = 0;
+};
+
+USTRUCT(BlueprintType)
+struct FUpgrade
+{
+	GENERATED_USTRUCT_BODY()
+
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LV")
+	FString myUpgradeName = "";
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LV")
+	TArray<FUpgradeToApply> myUpgradesToApply;
+};
+
+
 /**
  * 
  */
