@@ -19,4 +19,6 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "LV")
 	TArray<FPlayerStatUpgrade> myPlayerStatUpgrades;
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "LV")
+	TArray<FUpgrade> myUpgrades;
 };
