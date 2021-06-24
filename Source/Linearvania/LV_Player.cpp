@@ -53,7 +53,7 @@ void ALV_Player::Tick(float DeltaTime)
 	if (!myCanShoot)
 	{
 		myCurrentShootTime += DeltaTime;
-		if (myCurrentShootTime >= myPlayerStatUpgrades[myShootRateIndex].myCurrentValue)
+		if (myShootRateIndex != -1 && myCurrentShootTime >= myPlayerStatUpgrades[myShootRateIndex].myCurrentValue)
 		{
 			myCurrentShootTime = 0;
 			myCanShoot = true;
@@ -199,5 +199,6 @@ void ALV_Player::LoadUpgrades()
 
 	myShootRateIndex = GetPlayerUpgradeIndex("FireRate");
 
-	myPlayerStatUpgrades[myShootRateIndex].myCurrentValue = myPlayerStatUpgrades[myShootRateIndex].myBaseValue;
+	if(myShootRateIndex != -1)
+		myPlayerStatUpgrades[myShootRateIndex].myCurrentValue = myPlayerStatUpgrades[myShootRateIndex].myBaseValue;
 }
