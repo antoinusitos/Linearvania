@@ -30,6 +30,10 @@ void ALV_LevelGenerator::GenerateLevel()
 {
 	for (int i = 0; i < myLevelLength; i++)
 	{
-
+		for (int h = 0; h < myLevelHeight; h++)
+		{
+			AActor* tile = GetWorld()->SpawnActor<AActor>(myTileTest, FVector(0, i * myLengthSeparator, h * myHeightSeparator), FRotator(0.0f, 0.f, 0.f), FActorSpawnParameters());
+			mySpawnedTiles.Add(tile);
+		}
 	}
 }

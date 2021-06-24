@@ -197,7 +197,7 @@ void ALV_Player::LoadUpgrades()
 	}
 
 
-	myShootRateIndex = GetPlayerUpgradeIndex("FireRate");
+	myShootRateIndex = GetPlayerUpgradeIndex(myFireRateVariable);
 
 	if(myShootRateIndex != -1)
 		myPlayerStatUpgrades[myShootRateIndex].myCurrentValue = myPlayerStatUpgrades[myShootRateIndex].myBaseValue;

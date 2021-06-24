@@ -92,6 +92,9 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "LV")
 	ULV_DataAsset* myUpgradeData = nullptr;
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "LV")
+	FString myFireRateVariable = "PrimaryFireRate";
+
 private:
 	bool myIsShooting = false;
 

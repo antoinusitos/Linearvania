@@ -28,10 +28,22 @@ public:
 	TArray<AActor*> myTiles;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LV")
+	TSubclassOf<AActor> myTileTest;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LV")
 	int myLevelLength = 20;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LV")
 	int myLevelHeight = 3;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LV")
+	float myHeightSeparator = 1;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LV")
+	float myLengthSeparator = 1;
+
+private:
+	TArray<AActor*> mySpawnedTiles;
 
 public:
 	void GenerateLevel();
