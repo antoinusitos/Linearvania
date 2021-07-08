@@ -21,4 +21,10 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "LV")
 	TArray<FUpgrade> myUpgrades;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "LV")
+	TArray<FPowerUp> myPowerUps;
 };
+
+//Nom
+//Tableau (Destinataire, Variable, pourcentage)

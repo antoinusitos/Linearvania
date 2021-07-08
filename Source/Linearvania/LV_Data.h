@@ -54,6 +54,34 @@ public:
 };
 
 UENUM(BlueprintType)
+enum class PowerUpReceiver : uint8 {
+	PLAYER = 0 UMETA(DisplayName = "PLAYER"),
+	BULLET = 1  UMETA(DisplayName = "BULLET"),
+	WORLD = 2  UMETA(DisplayName = "WORLD"),
+};
+
+USTRUCT(BlueprintType)
+struct FPowerUp
+{
+	GENERATED_USTRUCT_BODY()
+
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LV")
+	FString myPowerUpName = "";
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LV")
+	PowerUpReceiver myReceiver;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LV")
+	FString myVariableToChange = "";
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LV")
+	float myPercentageToApply = 0;
+};
+
+
+
+UENUM(BlueprintType)
 enum class BlockType : uint8 {
 	BOSS = 0 UMETA(DisplayName = "BOSS"),
 	NORMAL = 1  UMETA(DisplayName = "NORMAL"),
