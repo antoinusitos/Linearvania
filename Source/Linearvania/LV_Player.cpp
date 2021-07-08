@@ -62,31 +62,17 @@ void ALV_Player::Tick(float DeltaTime)
 
 	if (myFlipbookComponent != nullptr)
 	{
-		if (myIsShooting)
+		if (GetMovementComponent()->Velocity.Z != 0)
 		{
-			if (myFlipbookComponent != nullptr && GetMovementComponent()->Velocity.Z != 0)
-			{
-				myFlipbookComponent->SetFlipbook(myJumpShootFlipbook);
-			}
-			else if (myFlipbookComponent != nullptr)
-			{
-				myFlipbookComponent->SetFlipbook(myShootFlipbook);
-			}
+			myFlipbookComponent->SetFlipbook(myJumpFlipbook);
+		}
+		else if (GetMovementComponent()->Velocity.Y != 0)
+		{
+			myFlipbookComponent->SetFlipbook(myRunFlipbook);
 		}
 		else
 		{
-			if (GetMovementComponent()->Velocity.Z != 0)
-			{
-				myFlipbookComponent->SetFlipbook(myJumpFlipbook);
-			}
-			else if (GetMovementComponent()->Velocity.Y != 0)
-			{
-				myFlipbookComponent->SetFlipbook(myRunFlipbook);
-			}
-			else
-			{
-				myFlipbookComponent->SetFlipbook(myIdleFlipbook);
-			}
+			myFlipbookComponent->SetFlipbook(myIdleFlipbook);
 		}
 	}
 
