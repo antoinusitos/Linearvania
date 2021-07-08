@@ -53,6 +53,11 @@ public:
 	TArray<FUpgradeToApply> myUpgradesToApply;
 };
 
+UENUM(BlueprintType)
+enum class BlockType : uint8 {
+	BOSS = 0 UMETA(DisplayName = "BOSS"),
+	NORMAL = 1  UMETA(DisplayName = "NORMAL"),
+};
 
 /**
  * 

@@ -6,6 +6,8 @@
 #include "GameFramework/Actor.h"
 #include "LV_LevelGenerator.generated.h"
 
+class ALV_Block;
+
 UCLASS()
 class LINEARVANIA_API ALV_LevelGenerator : public AActor
 {
@@ -25,10 +27,7 @@ public:
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LV")
-	TArray<AActor*> myTiles;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LV")
-	TSubclassOf<AActor> myTileTest;
+	TSubclassOf<ALV_Block> myTileTest;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LV")
 	int myLevelLength = 20;
@@ -43,7 +42,7 @@ public:
 	float myLengthSeparator = 1;
 
 private:
-	TArray<AActor*> mySpawnedTiles;
+	TArray<ALV_Block*> mySpawnedTiles;
 
 public:
 	void GenerateLevel();

@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "LV_LevelGenerator.h"
+#include "LV_Block.h"
 
 // Sets default values
 ALV_LevelGenerator::ALV_LevelGenerator()
@@ -30,10 +30,17 @@ void ALV_LevelGenerator::GenerateLevel()
 {
 	for (int i = 0; i < myLevelLength; i++)
 	{
-		for (int h = 0; h < myLevelHeight; h++)
-		{
-			AActor* tile = GetWorld()->SpawnActor<AActor>(myTileTest, GetActorLocation() + FVector(0, i * myLengthSeparator, h * myHeightSeparator), FRotator(0.0f, 0.f, 0.f), FActorSpawnParameters());
-			mySpawnedTiles.Add(tile);
-		}
+		ALV_Block* tile = GetWorld()->SpawnActor<ALV_Block>(myTileTest, GetActorLocation() + FVector(0, i * myLengthSeparator, 0), FRotator(0.0f, 0.f, 0.f), FActorSpawnParameters());
+		mySpawnedTiles.Add(tile);
+		tile->GenerateBlock(myLevelHeight, myHeightSeparator, i);
+	}
+	for (int i = 0; i < mySpawnedTiles.Num() - 1; i++)
+	{
+		mySpawnedTiles[i]->CheckLinks();
+		mySpawnedTiles[i]->CheckNeighbour(mySpawnedTiles, i);
+	}
+	for (int i = 0; i < mySpawnedTiles.Num(); i++)
+	{
+		mySpawnedTiles[i]->ShowArrow();
 	}
 }
