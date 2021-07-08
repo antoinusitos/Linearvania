@@ -100,11 +100,11 @@ void ALV_Player::Right(float aValue)
 		const FVector Direction = FRotationMatrix(Rotation).GetScaledAxis(EAxis::Y);
 		AddMovementInput(Direction, aValue);
 
-		if (myFlipbookComponent != nullptr && GetMovementComponent()->Velocity.Y > 0)
+		if (myFlipbookComponent != nullptr && aValue > 0)
 		{
 			myFlipbookComponent->SetRelativeRotation(FRotator(0, 90, 0));
 		}
-		else if(myFlipbookComponent != nullptr)
+		else if(myFlipbookComponent != nullptr && aValue < 0)
 		{
 			myFlipbookComponent->SetRelativeRotation(FRotator(0, -90, 0));
 		}
