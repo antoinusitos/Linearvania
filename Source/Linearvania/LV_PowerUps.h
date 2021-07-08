@@ -5,21 +5,18 @@
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
 #include "LV_Data.h"
-#include "LV_DataAsset.generated.h"
+#include "LV_PowerUps.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class LINEARVANIA_API ULV_DataAsset : public UDataAsset
+class LINEARVANIA_API ULV_PowerUps : public UDataAsset
 {
 	GENERATED_BODY()
-	
+
 public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "LV")
-	TArray<FPlayerStatUpgrade> myPlayerStatUpgrades;
-
+	TArray<FPowerUp> myPowerUps;
+	
 };
-
-//Nom
-//Tableau (Destinataire, Variable, pourcentage)
