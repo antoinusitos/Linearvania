@@ -70,6 +70,9 @@ public:
 	FString myPowerUpName = "";
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LV")
+	int myID = -1;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LV")
 	PowerUpReceiver myReceiver;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LV")
