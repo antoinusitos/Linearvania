@@ -42,6 +42,19 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "LV")
 	float mySpeed = 5.0f;
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "LV")
+	float myDamage = 1.0f;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "LV")
+	float myRange = 0;
+
+private :
+	float myBaseGravity = 0;
+
+	FVector myStartPos;
+
+	bool myGravityApplied = false;
+
 public:
 	UFUNCTION()
 	void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);

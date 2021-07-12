@@ -37,6 +37,17 @@ void ALV_Player::BeginPlay()
 	Super::BeginPlay();
 	
 	LoadUpgrades();
+
+	UCharacterMovementComponent* movementComp = GetCharacterMovement();
+	if (movementComp != nullptr && myMovementSpeedIndex != -1)
+	{
+		movementComp->MaxWalkSpeed = myPlayerStatUpgrades[myMovementSpeedIndex].myCurrentValue;
+	}
+
+	if (myHealthIndex != -1)
+	{
+		myCurrentHealth = myPlayerStatUpgrades[myHealthIndex].myCurrentValue;
+	}
 	
 }
 
@@ -53,7 +64,7 @@ void ALV_Player::Tick(float DeltaTime)
 	if (!myCanShoot)
 	{
 		myCurrentShootTime += DeltaTime;
-		if (myShootRateIndex != -1 && myCurrentShootTime >= myPlayerStatUpgrades[myShootRateIndex].myCurrentValue)
+		if (myPrimaryFireRateIndex != -1 && myCurrentShootTime >= myPlayerStatUpgrades[myPrimaryFireRateIndex].myCurrentValue)
 		{
 			myCurrentShootTime = 0;
 			myCanShoot = true;
@@ -137,6 +148,9 @@ void ALV_Player::SpawnBullet()
 	if (bullet != nullptr)
 	{
 		bullet->myDirection = myShootPlace->GetForwardVector();
+		if (myPrimarySpeedIndex != -1) bullet->mySpeed = myPlayerStatUpgrades[myPrimarySpeedIndex].myCurrentValue;
+		if (myPrimaryDamageIndex != -1) bullet->myDamage = myPlayerStatUpgrades[myPrimaryDamageIndex].myCurrentValue;
+		if (myPrimaryRangeIndex != -1) bullet->myRange = myPlayerStatUpgrades[myPrimaryRangeIndex].myCurrentValue;
 	}
 	myCurrentShootTime = 0;
 	myCanShoot = false;
@@ -157,6 +171,8 @@ void ALV_Player::AddBonus(const FString& aName, float aValue)
 			return;
 		}
 	}
+
+	UE_LOG(LogTemp, Error, TEXT("No Upgrade found for %s when adding bonus"), *aName);
 }
 
 int ALV_Player::GetPlayerUpgradeIndex(const FString& aName)
@@ -182,9 +198,42 @@ void ALV_Player::LoadUpgrades()
 		}
 	}
 
+	myPrimaryFireRateIndex = LoadSingleUpgrade(myPrimaryFireRate);
+	if (myPrimaryFireRateIndex == -1) return;
 
-	myShootRateIndex = GetPlayerUpgradeIndex(myFireRateVariable);
+	myPrimaryDamageIndex = LoadSingleUpgrade(myPrimaryDamage);
+	if (myPrimaryDamageIndex == -1) return;
 
-	if(myShootRateIndex != -1)
-		myPlayerStatUpgrades[myShootRateIndex].myCurrentValue = myPlayerStatUpgrades[myShootRateIndex].myBaseValue;
+	myPrimaryRangeIndex = LoadSingleUpgrade(myPrimaryRange);
+	if (myPrimaryRangeIndex == -1) return;
+
+	myPrimarySpeedIndex = LoadSingleUpgrade(myPrimarySpeed);
+	if (myPrimarySpeedIndex == -1) return;
+
+	myPrimaryImpactIndex = LoadSingleUpgrade(myPrimaryImpact);
+	if (myPrimaryImpactIndex == -1) return;
+
+	myPrimaryCastIndex = LoadSingleUpgrade(myPrimaryCast);
+	if (myPrimaryCastIndex == -1) return;
+
+	myMovementSpeedIndex = LoadSingleUpgrade(myMovementSpeed);
+	if (myMovementSpeedIndex == -1) return;
+
+	myHealthIndex = LoadSingleUpgrade(myHealth);
+	if (myHealthIndex == -1) return;
+}
+
+int ALV_Player::LoadSingleUpgrade(const FString& aName)
+{
+	int index = GetPlayerUpgradeIndex(aName);
+	if (index == -1)
+	{
+		UE_LOG(LogTemp, Error, TEXT("No Upgrade found for %s"), *aName);
+	}
+	else
+	{
+		myPlayerStatUpgrades[index].myCurrentValue = myPlayerStatUpgrades[index].myBaseValue;
+		UE_LOG(LogTemp, Warning, TEXT("Upgrade found for %s is %f"), *aName, myPlayerStatUpgrades[index].myCurrentValue);
+	}
+	return index;
 }

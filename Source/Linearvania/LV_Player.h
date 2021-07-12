@@ -55,6 +55,8 @@ private:
 
 	void LoadUpgrades();
 
+	int LoadSingleUpgrade(const FString& aName);
+
 public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "LV")
 	UPaperFlipbook* myJumpFlipbook = nullptr;
@@ -92,9 +94,6 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "LV")
 	ULV_DataAsset* myUpgradeData = nullptr;
 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "LV")
-	FString myFireRateVariable = "PrimaryFireRate";
-
 private:
 	bool myIsShooting = false;
 
@@ -102,5 +101,50 @@ private:
 
 	float myCurrentShootTime = 0;
 
-	int myShootRateIndex = 0;
+	int myCurrentHealth = 0;
+
+////////////////
+//UPGRADES
+////////////////
+public:
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "LV")
+	FString myPrimaryFireRate = "PrimaryFireRate";
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "LV")
+	FString myPrimaryDamage = "PrimaryDamage";
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "LV")
+	FString myPrimaryRange = "PrimaryRange";
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "LV")
+	FString myPrimarySpeed = "PrimarySpeed";
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "LV")
+	FString myPrimaryImpact = "PrimaryImpact";
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "LV")
+	FString myPrimaryCast = "PrimaryCast";
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "LV")
+	FString myMovementSpeed = "MovementSpeed";
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "LV")
+	FString myHealth = "Health";
+
+private:
+	int myPrimaryFireRateIndex = 0;
+
+	int myPrimaryDamageIndex = 0;
+
+	int myPrimaryRangeIndex = 0;
+
+	int myPrimarySpeedIndex = 0;
+
+	int myPrimaryImpactIndex = 0;
+
+	int myPrimaryCastIndex = 0;
+
+	int myMovementSpeedIndex = 0;
+
+	int myHealthIndex = 0;
 };

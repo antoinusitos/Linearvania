@@ -30,6 +30,7 @@ void ALV_Bullet::BeginPlay()
 	myCollisionComponent->OnComponentBeginOverlap.AddDynamic(this, &ALV_Bullet::OnOverlapBegin);
 	myCollisionComponent->OnComponentEndOverlap.AddDynamic(this, &ALV_Bullet::OnOverlapEnd);
 	
+	myStartPos = GetActorLocation();
 }
 
 // Called every frame
@@ -37,7 +38,13 @@ void ALV_Bullet::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	AddActorWorldOffset(myDirection * mySpeed);
+	AddActorWorldOffset(myDirection * mySpeed + FVector::UpVector * myBaseGravity);
+
+	if (!myGravityApplied && FVector::Dist(myStartPos, GetActorLocation()) >= myRange)
+	{
+		myGravityApplied = true;
+		myBaseGravity = -9;
+	}
 }
 
 void ALV_Bullet::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
@@ -47,7 +54,7 @@ void ALV_Bullet::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class
 		ALV_Enemy* enemy = Cast<ALV_Enemy>(OtherActor);
 		if (enemy != nullptr)
 		{
-			enemy->myLife--;
+			enemy->myLife -= myDamage;
 			if (enemy->myLife <= 0)
 			{
 				enemy->Destroy();
