@@ -73,6 +73,11 @@ void ALV_Cell::GenerateLinks()
 	{
 		myHasRightLink = FMath::RandBool();
 	}
+
+	if (myHasBottomLink) myNumberLinks++;
+	if (myHasTopLink) myNumberLinks++;
+	if (myHasLeftLink) myNumberLinks++;
+	if (myHasRightLink) myNumberLinks++;
 }
 
 void ALV_Cell::ShowArrow()
@@ -98,4 +103,27 @@ void ALV_Cell::ShowArrow()
 void ALV_Cell::AddLinkRight()
 {
 	myHasRightLink = true;
+}
+
+void ALV_Cell::CheckNumberLinks()
+{
+	if (myNumberLinks >= 2)
+		return;
+
+	if (myHasRightLink)
+	{
+		int rand = FMath::RandRange(0, 1);
+		if (rand == 0)
+		{
+			myHasTopLink = true;
+		}
+		else
+		{
+			myHasBottomLink = true;
+		}
+	}
+	else
+	{
+		myHasRightLink = true;
+	}
 }

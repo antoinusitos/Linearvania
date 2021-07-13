@@ -92,6 +92,7 @@ void ALV_Block::CheckLinks()
 	int nbLinks = 0;
 	for (int i = 0; i < myCells.Num(); i++)
 	{
+		myCells[i]->CheckNumberLinks();
 		if (myCells[i]->myHasRightLink)
 		{
 			nbLinks++;

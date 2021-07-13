@@ -59,11 +59,16 @@ public:
 		UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "LV")
 	UStaticMeshComponent* myBottomCube = nullptr;
 
+private:
+	int myNumberLinks = 0;
+
 public:
 	void GenerateLinks();
 
 	void ShowArrow();
 
 	void AddLinkRight();
+
+	void CheckNumberLinks();
 
 };
