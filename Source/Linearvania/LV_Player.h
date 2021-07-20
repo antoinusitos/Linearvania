@@ -103,6 +103,8 @@ private:
 
 	int myCurrentHealth = 0;
 
+	float myCurrentShootCharge = 0;
+
 ////////////////
 //UPGRADES
 ////////////////

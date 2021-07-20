@@ -58,7 +58,11 @@ void ALV_Player::Tick(float DeltaTime)
 
 	if(myIsShooting && myCanShoot)
 	{
-		SpawnBullet();
+		myCurrentShootCharge += DeltaTime;
+		if (myPrimaryCastIndex != -1 && myCurrentShootCharge >= myPlayerStatUpgrades[myPrimaryCastIndex].myCurrentValue)
+		{
+			SpawnBullet();
+		}
 	}
 
 	if (!myCanShoot)
